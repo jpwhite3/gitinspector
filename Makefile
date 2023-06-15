@@ -35,27 +35,18 @@ clean-test: ## remove test and coverage artifacts
 	rm -fr .pytest_cache
 
 lint: ## check style with flake8 and pylint
-	pylint --rcfile=.pylintrc gitinspector
 	# stop the build if there are Python syntax errors or undefined names
 	flake8 gitinspector tests --count --select=E9,F63,F7,F82 --show-source --statistics --builtins="_"
 	# exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
 	flake8 gitinspector tests --count --ignore=E203,E722,W503,E401,C901 --exit-zero --max-complexity=10 --max-line-length=127 --statistics --builtins="_"
-
-format: ## auto format all the code with black
-	black ./gitinspector --line-length 127
+	pylint --rcfile=.pylintrc gitinspector
 
 test: ## run tests quickly with the default Python
 	pytest
 
-test-debug: ## run tests with debugging enabled
-	LOGLEVEL=debug; py.test -s --pdb
-
 test-coverage: ## check code coverage quickly with the default Python
 	coverage run --source gitinspector -m pytest
 	coverage report -m
-
-test-coverage-report: test-coverage ## Report coverage to Coveralls
-	coveralls
 
 release: dist ## package and upload a release
 	twine upload dist/*
@@ -81,4 +72,4 @@ install: clean ## install the package to the active Python's site-packages
 	python3 setup.py install
 
 requirements:
-	pipenv lock -r --dev > requirements.txt
+	pipenv requirements > requirements.txt

@@ -5,6 +5,11 @@ name = "pypi"
 
 [packages]
 black-but-with-tabs-instead-of-spaces = "*"
+pytest = "*"
+pylint = "*"
+flake8 = "*"
+coverage = "*"
+twine = "*"
 
 [dev-packages]
 pytest = "*"
